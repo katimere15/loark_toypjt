@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>110</y>
+     <width>382</width>
+     <height>138</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>로그인</string>
+   </property>
+   <widget class="QLabel" name="label_id">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>56</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>아이디</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_pw">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>80</y>
+      <width>56</width>
+      <height>12</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>비밀번호</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="loginbutten">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>110</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>로그인</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="signinbutten">
+    <property name="geometry">
+     <rect>
+      <x>220</x>
+      <y>110</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>회원가입</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="login_userid">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>40</y>
+      <width>281</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="login_userpw">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>80</y>
+      <width>281</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="title_box" native="true">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>50</y>
+     <width>285</width>
+     <height>37</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="title">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>14</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>모코코세상 길드파티 프로그램</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>260</y>
+     <width>351</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>비밀번호 잊어버리셨을때는 디코 어머/SevenNight로 dm주세요</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>signinbutten</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>signin_step()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>267</x>
+     <y>234</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>268</x>
+     <y>279</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>loginbutten</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>login_step()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>351</x>
+     <y>236</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>356</x>
+     <y>285</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>login_step()</slot>
+  <slot>signin_step()</slot>
+ </slots>
+</ui>

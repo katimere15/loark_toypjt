@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>110</y>
+     <width>382</width>
+     <height>171</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>회원가입</string>
+   </property>
+   <widget class="QLabel" name="label_id">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>사용할 아이디</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_pw">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>70</y>
+      <width>51</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>비밀번호</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="creat_userid">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>140</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>만들기</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_topchar">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>110</y>
+      <width>71</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>대표캐릭터명</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="signin_userid">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>30</y>
+      <width>251</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="signin_userpw">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>70</y>
+      <width>251</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="signin_topchar">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>110</y>
+      <width>251</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="return_loginfrom">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>140</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>돌아가기</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="title_box" native="true">
+   <property name="geometry">
+    <rect>
+     <x>60</x>
+     <y>50</y>
+     <width>285</width>
+     <height>37</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="title">
+      <property name="font">
+       <font>
+        <family>휴먼둥근헤드라인</family>
+        <pointsize>14</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>모코코세상 길드파티 프로그램</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>creat_userid</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>userinfo_push()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>332</x>
+     <y>263</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>239</x>
+     <y>288</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>return_loginfrom</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>return_login()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>264</x>
+     <y>264</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>110</x>
+     <y>291</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>userinfo_push()</slot>
+  <slot>return_login()</slot>
+ </slots>
+</ui>
