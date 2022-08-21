@@ -38,9 +38,9 @@ def return_charlevel(address):
 
         
 print(result)
-user_count=len(result)
-print(user_count)
 
+
+user_count=len(result)
 for i in range(user_count):
     #대표캐릭터로 보유캐릭터 데이터 가져와 all_have_charname에 대입
     all_have_charname=return_all_havechar("https://lostark.game.onstove.com/Profile/Character/%s" %result[i][1])
@@ -51,5 +51,7 @@ for i in range(user_count):
         char_info.extend([result[i][0],return_charlevel("https://lostark.game.onstove.com/Profile/Character/%s" %all_have_charname[j])])
         print(char_info)
         char_info=[]
-    
+        
 
+#lostark-wrapper > div > main > div > h2
+#lostark-wrapper > div > main > div > div.profile-character-info

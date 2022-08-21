@@ -6,26 +6,271 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1292</width>
+    <height>807</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="goto_loginwindow">
+   <widget class="QGroupBox" name="choice_char_info">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>270</y>
-      <width>75</width>
-      <height>23</height>
+      <x>20</x>
+      <y>190</y>
+      <width>301</width>
+      <height>541</height>
      </rect>
     </property>
-    <property name="text">
-     <string>돌아가기</string>
+    <property name="title">
+     <string>선택 캐릭터</string>
     </property>
+    <widget class="QComboBox" name="char_cho">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>281</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>60</y>
+       <width>261</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <widget class="QLabel" name="char_cho_name">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>60</y>
+        <width>211</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>캐릭터명</string>
+      </property>
+     </widget>
+     <widget class="QSplitter" name="splitter">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>20</y>
+        <width>211</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <widget class="QLabel" name="char_cho_job">
+       <property name="text">
+        <string>직업이름</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="char_cho_level">
+       <property name="text">
+        <string>캐릭터레벨</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QGroupBox" name="gem_imprint">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>200</y>
+       <width>261</width>
+       <height>321</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>보석 &amp; 각인</string>
+     </property>
+     <widget class="QListWidget" name="gam_info">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>111</width>
+        <height>271</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QListWidget" name="imprint_info">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>30</y>
+        <width>111</width>
+        <height>271</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="view_party">
+    <property name="geometry">
+     <rect>
+      <x>350</x>
+      <y>30</y>
+      <width>281</width>
+      <height>701</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>날짜_만들어진 파티</string>
+    </property>
+    <widget class="QListWidget" name="view_party_info">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>261</width>
+       <height>601</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="cho_party_btn">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>660</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>선택</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="making_party_btn">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>660</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>파티만들기</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="view_partyseat">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>30</y>
+      <width>281</width>
+      <height>701</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>파티자리 확인</string>
+    </property>
+    <widget class="QListWidget" name="view_partyseat_info">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>256</width>
+       <height>561</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="cho_party_title">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>40</y>
+       <width>241</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>선택한 파티</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="cho_partyseat_btn">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>660</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>신청</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="my_application">
+    <property name="geometry">
+     <rect>
+      <x>990</x>
+      <y>30</y>
+      <width>281</width>
+      <height>701</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>신청한 파티 확인</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="logininfo">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>301</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string/>
+    </property>
+    <widget class="QLabel" name="hello_user">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>어서오십셔</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="top_char">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>60</y>
+       <width>231</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Agency FB</family>
+       <pointsize>16</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>대표캐릭터 이름</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -33,7 +278,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1292</width>
      <height>21</height>
     </rect>
    </property>
