@@ -286,8 +286,25 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>top_char</sender>
+   <signal>linkActivated(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>change_top_char()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>128</x>
+     <y>130</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>336</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
-  <slot>goto_loginwindow()</slot>
+  <slot>change_top_char()</slot>
  </slots>
 </ui>

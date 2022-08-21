@@ -5,71 +5,15 @@ import requests
 from bs4 import BeautifulSoup
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
-import main_page
-
 
 def resource_path(relative_path):
     base_path = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
 
-
-# UI파일 연결
-# UI파일 위치를 잘 적어 넣어준다.
-#로그인 화면 파일 연결
-loginwindow_form = resource_path("./ui/loginwindow.ui")
-loginwindow_form_class = uic.loadUiType(loginwindow_form)[0]
 #회원가입 화면 파일 연결
 signinwindow_form = resource_path("./ui/signinwindow.ui")
 signinwindow_form_class = uic.loadUiType(signinwindow_form)[0]
-# #메인 화면 파일 연결
-# main_form = resource_path("./ui/main.ui")
-# main_form_class = uic.loadUiType(main_form)[0]
 
-
-#로그인 창
-class login_Class(QDialog,QWidget,loginwindow_form_class):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-        self.setWindowTitle('로그인창')
-        self.show()
-
-    #로그인 버튼 눌렀을 때 이밴트    
-    def login_step(self):
-        input_login_userid = self.login_userid.text() #login_userid text 값 가져오기
-        input_login_userpw = self.login_userpw.text() #login_userpw text 값 가져오기
-        conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
-        cursor = conn.cursor()
-
-        sql = "SELECT * FROM userinfo where userid = '%s'" % input_login_userid
-        cursor.execute(sql)
-
-        result = cursor.fetchall()
-        conn.close()
-
-        #공백,아이디,비번확인
-        if not result:
-            QMessageBox.information(self,"다시입력","공백이거나 아이디를 찾을 수 없습니다. 아이디를 확인하시거나 회원가입을 진행해주세요")
-        elif result:
-            if input_login_userpw != result[0][1]:
-                QMessageBox.information(self,"다시입력","비밀번호가 틀렸습니다.(잊어버린거 아니죠??? 그렇죠??)")
-            else:
-                QMessageBox.information(self,"시작하기","어섭셔~~~ 회원님 입장하신다~~")
-                self.close()                     #로그인 페이지 종료
-                # self.second = Ui_MainWindow()    #메인페이지 오픈
-
-
-
-    #회원가입 버튼눌렀을떄 이밴트
-    def signin_step(self):
-        self.hide()                     # 로그인페이지 숨김
-        self.second = signin_class()    # 회원가입 페이지 오픈
-        self.second.exec()              # 회원가입 대기
-        self.show()                     # 로그인 페이지 보이기
-
-
-
-#메인 창
 
 
 
@@ -131,10 +75,6 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
             result2 = cursor.fetchall()
 
 
-
-
-
-
             if result:
                 QMessageBox.information(self,"다시입력하기","사용중인 아이디입니다. 다시입력하십셔")
             elif result2:
@@ -182,10 +122,8 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
     def return_login(self):
         self.close()
 
-
-
-if __name__ == "__main__" :
-    app = QApplication(sys.argv) 
-    window = login_Class() 
-    window.show()
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    myWindow = signin_class()
+    myWindow.show()
     app.exec_()

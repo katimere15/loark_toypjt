@@ -142,34 +142,34 @@
  <resources/>
  <connections>
   <connection>
-   <sender>signinbutten</sender>
-   <signal>clicked()</signal>
-   <receiver>Form</receiver>
-   <slot>signin_step()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>267</x>
-     <y>234</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>268</x>
-     <y>279</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>loginbutten</sender>
    <signal>clicked()</signal>
    <receiver>Form</receiver>
    <slot>login_step()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>351</x>
-     <y>236</y>
+     <x>358</x>
+     <y>228</y>
     </hint>
     <hint type="destinationlabel">
-     <x>356</x>
-     <y>285</y>
+     <x>349</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>signinbutten</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>signin_step()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>279</x>
+     <y>235</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>232</x>
+     <y>101</y>
     </hint>
    </hints>
   </connection>

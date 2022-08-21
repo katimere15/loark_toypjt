@@ -152,34 +152,34 @@
  <resources/>
  <connections>
   <connection>
-   <sender>creat_userid</sender>
-   <signal>clicked()</signal>
-   <receiver>Form</receiver>
-   <slot>userinfo_push()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>332</x>
-     <y>263</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>239</x>
-     <y>288</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>return_loginfrom</sender>
    <signal>clicked()</signal>
    <receiver>Form</receiver>
    <slot>return_login()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>264</x>
+     <x>239</x>
      <y>264</y>
     </hint>
     <hint type="destinationlabel">
-     <x>110</x>
-     <y>291</y>
+     <x>243</x>
+     <y>289</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>creat_userid</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>userinfo_push()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>350</x>
+     <y>265</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>350</x>
+     <y>296</y>
     </hint>
    </hints>
   </connection>
