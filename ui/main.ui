@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>선택 캐릭터</string>
+     <string>내 캐릭터 정보보기</string>
     </property>
     <widget class="QComboBox" name="char_cho">
      <property name="geometry">
@@ -40,9 +40,9 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>60</y>
+       <y>90</y>
        <width>261</width>
-       <height>131</height>
+       <height>101</height>
       </rect>
      </property>
      <widget class="QLabel" name="char_cho_name">
@@ -50,36 +50,81 @@
        <rect>
         <x>10</x>
         <y>60</y>
-        <width>211</width>
-        <height>31</height>
+        <width>231</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Agency FB</family>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="midLineWidth">
+       <number>0</number>
       </property>
       <property name="text">
        <string>캐릭터명</string>
       </property>
      </widget>
-     <widget class="QSplitter" name="splitter">
+     <widget class="QLabel" name="char_cho_job">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>241</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Agency FB</family>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>직업</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="char_cho_level">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>20</y>
-        <width>211</width>
-        <height>16</height>
+        <y>30</y>
+        <width>241</width>
+        <height>21</height>
        </rect>
       </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+      <property name="font">
+       <font>
+        <family>Agency FB</family>
+        <pointsize>9</pointsize>
+       </font>
       </property>
-      <widget class="QLabel" name="char_cho_job">
-       <property name="text">
-        <string>직업이름</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="char_cho_level">
-       <property name="text">
-        <string>캐릭터레벨</string>
-       </property>
-      </widget>
+      <property name="frameShape">
+       <enum>QFrame::Box</enum>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>레벨</string>
+      </property>
      </widget>
     </widget>
     <widget class="QGroupBox" name="gem_imprint">
@@ -114,6 +159,19 @@
        </rect>
       </property>
      </widget>
+    </widget>
+    <widget class="QPushButton" name="char_cho_btn">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>50</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>선택하기</string>
+     </property>
     </widget>
    </widget>
    <widget class="QGroupBox" name="view_party">
@@ -151,19 +209,6 @@
       <string>선택</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="making_party_btn">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>660</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>파티만들기</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QGroupBox" name="view_partyseat">
     <property name="geometry">
@@ -197,7 +242,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>선택한 파티</string>
+      <string>선택한 파티 이름</string>
      </property>
     </widget>
     <widget class="QPushButton" name="cho_partyseat_btn">
@@ -217,15 +262,38 @@
    <widget class="QGroupBox" name="my_application">
     <property name="geometry">
      <rect>
-      <x>990</x>
-      <y>30</y>
+      <x>980</x>
+      <y>360</y>
       <width>281</width>
-      <height>701</height>
+      <height>371</height>
      </rect>
     </property>
     <property name="title">
-     <string>신청한 파티 확인</string>
+     <string>신청한 파티</string>
     </property>
+    <widget class="QListWidget" name="select_party">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>256</width>
+       <height>271</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="drop_select_byn">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>330</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>신청 취소</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="logininfo">
     <property name="geometry">
@@ -248,11 +316,17 @@
        <height>21</height>
       </rect>
      </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
+     </property>
      <property name="text">
       <string>어서오십셔</string>
      </property>
     </widget>
-    <widget class="QLabel" name="top_char">
+    <widget class="QLabel" name="login_id_name">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -264,11 +338,66 @@
      <property name="font">
       <font>
        <family>Agency FB</family>
-       <pointsize>16</pointsize>
+       <pointsize>12</pointsize>
       </font>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::Box</enum>
+     </property>
+     <property name="lineWidth">
+      <number>0</number>
      </property>
      <property name="text">
       <string>대표캐릭터 이름</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="my_application_2">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>30</y>
+      <width>281</width>
+      <height>311</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>내가 만든 파티</string>
+    </property>
+    <widget class="QListWidget" name="made_myparty_list">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>256</width>
+       <height>211</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="drop_party_btn">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>270</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>파티 취소</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="making_party_btn">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>270</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>파티만들기</string>
      </property>
     </widget>
    </widget>
@@ -288,23 +417,40 @@
  <resources/>
  <connections>
   <connection>
-   <sender>top_char</sender>
-   <signal>linkActivated(QString)</signal>
+   <sender>char_cho_btn</sender>
+   <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>change_top_char()</slot>
+   <slot>change_cho_char_info()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>128</x>
-     <y>130</y>
+     <x>169</x>
+     <y>270</y>
     </hint>
     <hint type="destinationlabel">
-     <x>336</x>
-     <y>56</y>
+     <x>338</x>
+     <y>284</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>making_party_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>making_party_btn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1028</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>981</x>
+     <y>369</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>change_top_char()</slot>
+  <slot>change_cho_char_info()</slot>
+  <slot>making_party_btn()</slot>
  </slots>
 </ui>

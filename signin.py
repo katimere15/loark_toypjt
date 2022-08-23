@@ -2,6 +2,7 @@ import os
 import sys
 import pymysql
 import requests
+import login
 from bs4 import BeautifulSoup
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
@@ -46,6 +47,7 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
         super(signin_class,self).__init__()
         self.initUi()
         self.show()
+
     def initUi(self):
         self.setupUi(self)
         self.setWindowTitle('회원가입창')
@@ -115,15 +117,18 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
 
 
                 QMessageBox.information(self,"로그인창으로","회원가입이 완료되었습니다.(비밀번호 까먹지말아줘 찾는거 수작업이야...)")
-                self.close() #클릭시 종료
+                #회원가입 페이지 닫기
+                self.close() 
+                #로그인 페이지 열기
+                self.login_page = login.login_Class()
+                self.login_page.show()   
+
             
 
     #회원가입 창에서 돌아가기 버튼 누를때 이밴트
     def return_login(self):
+        #회원가입 페이지 닫기
         self.close()
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    myWindow = signin_class()
-    myWindow.show()
-    app.exec_()
+        #로그인 페이지 열기
+        self.login_page = login.login_Class()
+        self.login_page.show()   
