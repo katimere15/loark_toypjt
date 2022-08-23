@@ -53,7 +53,7 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
         self.setWindowTitle('회원가입창')
 
     #회원가입 창에서 만들기 버튼 누를때 이밴트
-    def userinfo_push(self):
+    def make_userinfo_step(self):
         input_signin_userid = self.signin_userid.text() #signin_userid text 값 가져오기
         input_signin_userpw = self.signin_userpw.text() #signin_userpw text 값 가져오기
         input_signin_topchar = self.signin_topchar.text() #signin_topchar text 값 가져오기
@@ -120,7 +120,7 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
                 #회원가입 페이지 닫기
                 self.close() 
                 #로그인 페이지 열기
-                self.login_page = login.login_Class()
+                self.login_page = login.login_class()
                 self.login_page.show()   
 
             
@@ -130,5 +130,5 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
         #회원가입 페이지 닫기
         self.close()
         #로그인 페이지 열기
-        self.login_page = login.login_Class()
+        self.login_page = login.login_class()
         self.login_page.show()   

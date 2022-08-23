@@ -36,7 +36,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QWidget" name="widget" native="true">
+    <widget class="QWidget" name="vwew_char" native="true">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -184,7 +184,7 @@
      </rect>
     </property>
     <property name="title">
-     <string>날짜_만들어진 파티</string>
+     <string>만들어진 파티</string>
     </property>
     <widget class="QListWidget" name="view_party_info">
      <property name="geometry">
@@ -206,7 +206,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>선택</string>
+      <string>파티선택</string>
      </property>
     </widget>
    </widget>
@@ -255,7 +255,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>신청</string>
+      <string>파티신청</string>
      </property>
     </widget>
    </widget>
@@ -420,7 +420,7 @@
    <sender>char_cho_btn</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>change_cho_char_info()</slot>
+   <slot>mychar_info()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>169</x>
@@ -433,24 +433,92 @@
    </hints>
   </connection>
   <connection>
+   <sender>cho_party_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>look_at_party()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>565</x>
+     <y>724</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>544</x>
+     <y>781</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cho_partyseat_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>join_party()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>892</x>
+     <y>726</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>874</x>
+     <y>782</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>making_party_btn</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>making_party_btn()</slot>
+   <slot>make_party_step()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1028</x>
-     <y>329</y>
+     <x>1009</x>
+     <y>333</y>
     </hint>
     <hint type="destinationlabel">
-     <x>981</x>
-     <y>369</y>
+     <x>970</x>
+     <y>373</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>drop_party_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>drop_party()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1216</x>
+     <y>333</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1161</x>
+     <y>377</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>drop_select_byn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>drop_joinparty()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1203</x>
+     <y>718</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1145</x>
+     <y>776</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>change_cho_char_info()</slot>
-  <slot>making_party_btn()</slot>
+  <slot>mychar_info()</slot>
+  <slot>look_at_party()</slot>
+  <slot>join_party()</slot>
+  <slot>make_party_step()</slot>
+  <slot>drop_party()</slot>
+  <slot>drop_joinparty()</slot>
  </slots>
 </ui>

@@ -162,8 +162,8 @@
      <y>264</y>
     </hint>
     <hint type="destinationlabel">
-     <x>243</x>
-     <y>289</y>
+     <x>113</x>
+     <y>288</y>
     </hint>
    </hints>
   </connection>
@@ -171,21 +171,21 @@
    <sender>creat_userid</sender>
    <signal>clicked()</signal>
    <receiver>Form</receiver>
-   <slot>userinfo_push()</slot>
+   <slot>make_userinfo_step()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>350</x>
      <y>265</y>
     </hint>
     <hint type="destinationlabel">
-     <x>350</x>
-     <y>296</y>
+     <x>311</x>
+     <y>291</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>userinfo_push()</slot>
+  <slot>make_userinfo_step()</slot>
   <slot>return_login()</slot>
  </slots>
 </ui>

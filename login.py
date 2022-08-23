@@ -22,12 +22,13 @@ loginwindow_form_class = uic.loadUiType(loginwindow_form)[0]
 
 
 #로그인 창
-class login_Class(QDialog,QWidget,loginwindow_form_class):
+class login_class(QDialog,QWidget,loginwindow_form_class):
     def __init__(self):
-        super().__init__()
-        self.setupUi(self)
+        super(login_class,self).__init__()
+        self.initui()
         self.setWindowTitle('로그인창')
-
+    def initui(self):
+        self.setupUi(self)
     #로그인 버튼 눌렀을 때 이밴트    
     def login_step(self):
         global input_login_userid
