@@ -19,6 +19,7 @@ main_form = resource_path("./ui/main.ui")
 main_form_class = uic.loadUiType(main_form)[0]
 
 
+
 #메인 창
 class main_class(QMainWindow, main_form_class):
     def __init__(self):
@@ -27,7 +28,8 @@ class main_class(QMainWindow, main_form_class):
         self.setWindowTitle('MAIN')
     def initui(self):
         self.setupUi(self)
-
+        #데이터베이스에서 가져온 보유캐릭터 정보 넣을 전역변수 선언 
+        global have_char_info
 
     
 
@@ -48,8 +50,12 @@ class main_class(QMainWindow, main_form_class):
         #sql구문 실행한 결과값을 result에 대입
         result = cursor.fetchall()
         conn.close()
+        #데이터베이스에서 가져온 보유캐릭터 정보 전역변수로 입력
 
-        for i in result:
+        # 보유캐릭터 정보 넣을 전역변수에 데이터 대입
+        have_char_info = result
+
+        for i in have_char_info:
             char_list = " ".join(i)
             #콤보박스 요소 추가하는 코드
             self.char_cho.addItem(char_list)
@@ -61,7 +67,7 @@ class main_class(QMainWindow, main_form_class):
         split_char_list=char_list.split(' ')
         
         self.char_cho_name.setText(split_char_list[0])
-        self.char_cho_level.setText(split_char_list[1])
+        self.char_cho_level.setText("LV.  "+split_char_list[1])
         self.char_cho_job.setText(split_char_list[2])
 
 

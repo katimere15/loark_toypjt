@@ -21,6 +21,7 @@ loginwindow_form_class = uic.loadUiType(loginwindow_form)[0]
 
 
 
+
 #로그인 창
 class login_class(QDialog,QWidget,loginwindow_form_class):
     def __init__(self):

@@ -40,8 +40,10 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
         soup = BeautifulSoup(res.text, 'html.parser')
         char_name = soup.select_one("#lostark-wrapper > div > main > div > div.profile-character-info > span.profile-character-info__name").text
         char_level = soup.select_one('#lostark-wrapper > div > main > div > div.profile-ingame > div.profile-info > div.level-info2 > div.level-info2__expedition > span:nth-child(2)').text
+        char_level_set = char_level[3:len(char_level)-3]
+        char_level_set2 = ''.join(char_level_set.split(","))
         char_job = soup.select_one("#lostark-wrapper > div > main > div > div.profile-character-info > img")["alt"]
-        return char_name,char_level,char_job
+        return char_name,char_level_set2,char_job
 
     def __init__(self):
         super(signin_class,self).__init__()
@@ -88,9 +90,9 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
                 all_have_charname=signin_class.return_all_havechar("https://lostark.game.onstove.com/Profile/Character/%s" %input_signin_topchar)
                 all_have_char_count=len(all_have_charname)
                 #대표캐릭터이름으로 검색실패시 메시지 출력 성공시 정보 가져옴
-                if all_have_charname == 0:
+                if all_have_char_count == 0:
                     QMessageBox.information(self,"다시입력하기","뭐임 대표캐릭터이름 다시확인점")
-                else:
+                elif all_have_char_count != 0:
                     #userid테이블에 정보입력
                     sql = "INSERT INTO userinfo (userid,userpw,top_char,step) VALUES (%s, %s, %s ,%s)"
                     with conn:
@@ -113,15 +115,12 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
                                     cur.execute(sql2, (input_signin_userid,char_info[0],char_info[1],char_info[2]))
                                     conn.commit()
                             char_info=[]
-
-
-
-                QMessageBox.information(self,"로그인창으로","회원가입이 완료되었습니다.(비밀번호 까먹지말아줘 찾는거 수작업이야...)")
-                #회원가입 페이지 닫기
-                self.close() 
-                #로그인 페이지 열기
-                self.login_page = login.login_class()
-                self.login_page.show()   
+                    QMessageBox.information(self,"로그인창으로","회원가입이 완료되었습니다.(비밀번호 까먹지말아줘 찾는거 수작업이야...)")
+                    #회원가입 페이지 닫기
+                    self.close() 
+                    #로그인 페이지 열기
+                    self.login_page = login.login_class()
+                    self.login_page.show()   
 
             
 

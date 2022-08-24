@@ -17,24 +17,100 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="0" column="0" colspan="2">
     <widget class="QGroupBox" name="box1">
      <property name="title">
-      <string>날짜선택</string>
+      <string/>
      </property>
-     <widget class="QCalendarWidget" name="date_cho">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>20</y>
-        <width>421</width>
-        <height>211</height>
-       </rect>
-      </property>
-     </widget>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="1">
+       <widget class="QGroupBox" name="party_select_box">
+        <property name="title">
+         <string>파티이름 &amp; 시간선택</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_4">
+         <item row="0" column="0">
+          <widget class="QGroupBox" name="start_time_box">
+           <property name="title">
+            <string>시작시간</string>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_2">
+            <item row="0" column="0">
+             <widget class="QLabel" name="view_date">
+              <property name="text">
+               <string>선택날짜 보여주는 text</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QTimeEdit" name="input_start_time"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QGroupBox" name="party_name_box">
+           <property name="title">
+            <string>파티이름</string>
+           </property>
+           <widget class="QLabel" name="alter_txt">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>22</y>
+              <width>351</width>
+              <height>31</height>
+             </rect>
+            </property>
+            <property name="font">
+             <font>
+              <family>Agency FB</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>입력하지않으면 자동으로 만들어집니다.</string>
+            </property>
+           </widget>
+           <widget class="QLineEdit" name="party_name_2">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>60</y>
+              <width>381</width>
+              <height>20</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QGroupBox" name="date_box">
+        <property name="title">
+         <string>날짜선택</string>
+        </property>
+        <widget class="QCalendarWidget" name="date_table">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>22</y>
+           <width>272</width>
+           <height>183</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="0" column="1" rowspan="2">
+   <item row="1" column="1">
     <widget class="QGroupBox" name="party_cho_info">
      <property name="title">
       <string>선택한 파티 정보</string>
@@ -42,9 +118,9 @@
      <widget class="QLabel" name="date_time">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>60</y>
-        <width>171</width>
+        <x>10</x>
+        <y>22</y>
+        <width>64</width>
         <height>16</height>
        </rect>
       </property>
@@ -55,9 +131,9 @@
      <widget class="QLabel" name="raid_colum">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>110</y>
-        <width>211</width>
+        <x>10</x>
+        <y>79</y>
+        <width>24</width>
         <height>16</height>
        </rect>
       </property>
@@ -68,10 +144,10 @@
      <widget class="QLabel" name="party_name">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>160</y>
-        <width>56</width>
-        <height>12</height>
+        <x>10</x>
+        <y>135</y>
+        <width>48</width>
+        <height>16</height>
        </rect>
       </property>
       <property name="text">
@@ -81,10 +157,10 @@
      <widget class="QPushButton" name="input_db_partyinfo">
       <property name="geometry">
        <rect>
-        <x>284</x>
-        <y>490</y>
-        <width>101</width>
-        <height>41</height>
+        <x>350</x>
+        <y>250</y>
+        <width>75</width>
+        <height>23</height>
        </rect>
       </property>
       <property name="text">
@@ -94,10 +170,10 @@
      <widget class="QLabel" name="master_char">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>200</y>
-        <width>91</width>
-        <height>21</height>
+        <x>10</x>
+        <y>192</y>
+        <width>76</width>
+        <height>16</height>
        </rect>
       </property>
       <property name="text">
@@ -107,184 +183,145 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QGroupBox" name="box2">
+    <widget class="QGroupBox" name="party_value_box">
      <property name="title">
-      <string>정보입력</string>
+      <string>레이드, 캐릭터 선택</string>
      </property>
-     <widget class="QGroupBox" name="raid_box">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>22</y>
-        <width>103</width>
-        <height>158</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>레이드</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <item>
-        <widget class="QRadioButton" name="vvvv">
-         <property name="text">
-          <string>발탄</string>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="1" column="0">
+       <widget class="QGroupBox" name="groupBox_6">
+        <property name="title">
+         <string>난이도</string>
+        </property>
+        <widget class="QListWidget" name="select_difficulty">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>20</y>
+           <width>111</width>
+           <height>121</height>
+          </rect>
          </property>
         </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="bea">
-         <property name="text">
-          <string>비아키스</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="coco">
-         <property name="text">
-          <string>쿠크세이튼</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="av">
-         <property name="text">
-          <string>아브렐슈드</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="cayan">
-         <property name="text">
-          <string>카양겔</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QRadioButton" name="il">
-         <property name="text">
-          <string>일리아칸</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QGroupBox" name="input_party_name">
-      <property name="geometry">
-       <rect>
-        <x>119</x>
-        <y>22</y>
-        <width>312</width>
-        <height>158</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>파티이름 &amp; 시간선택</string>
-      </property>
-      <widget class="QLineEdit" name="input_make_party_name">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>50</y>
-         <width>291</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QTimeEdit" name="input_make_party_time">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>110</y>
-         <width>291</width>
-         <height>20</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QLabel" name="fix_text2">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>171</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <family>Agency FB</family>
-         <pointsize>7</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>입력하지않으면 자동으로 만들어집니다.</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="fix_text">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>56</width>
-         <height>12</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>파티이름</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="fix_text3">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>90</y>
-         <width>56</width>
-         <height>12</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>시작시간</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QPushButton" name="input__info_viwe_btn">
-      <property name="geometry">
-       <rect>
-        <x>230</x>
-        <y>202</y>
-        <width>181</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>결정하기</string>
-      </property>
-     </widget>
-     <widget class="QGroupBox" name="input_char">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>186</y>
-        <width>191</width>
-        <height>81</height>
-       </rect>
-      </property>
-      <property name="title">
-       <string>참여할 캐릭터</string>
-      </property>
-      <widget class="QComboBox" name="mychar_cho">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>30</y>
-         <width>171</width>
-         <height>21</height>
-        </rect>
-       </property>
-      </widget>
-     </widget>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="QGroupBox" name="groupBox_7">
+        <property name="title">
+         <string>캐릭터 선택</string>
+        </property>
+        <layout class="QFormLayout" name="formLayout">
+         <item row="0" column="0">
+          <widget class="QListWidget" name="select_character"/>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>군단장</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QRadioButton" name="valtan">
+           <property name="text">
+            <string>발탄</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="bykas">
+           <property name="text">
+            <string>비아키스</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="kakul_saydon">
+           <property name="text">
+            <string>쿠크세이튼</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="brelshaza">
+           <property name="text">
+            <string>아브렐슈드</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="akkan">
+           <property name="text">
+            <string>일리아칸</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QGroupBox" name="groupBox_9">
+        <property name="title">
+         <string>보정컨텐츠</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_9">
+         <item row="0" column="0">
+          <widget class="QRadioButton" name="guardian">
+           <property name="text">
+            <string>도가토</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QRadioButton" name="rehearsal">
+           <property name="text">
+            <string>리허설</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QRadioButton" name="dejavu">
+           <property name="text">
+            <string>데자뷰</string>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
+          <widget class="QRadioButton" name="epidemic">
+           <property name="text">
+            <string>에피데믹</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QRadioButton" name="abyss">
+           <property name="text">
+            <string>도비스</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QGroupBox" name="groupBox">
+        <property name="title">
+         <string>어비스</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_7">
+         <item row="0" column="0">
+          <widget class="QRadioButton" name="kayanggel">
+           <property name="text">
+            <string>카양겔</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
@@ -298,8 +335,8 @@
    <slot>make_party()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>799</x>
-     <y>527</y>
+     <x>879</x>
+     <y>427</y>
     </hint>
     <hint type="destinationlabel">
      <x>441</x>
@@ -308,18 +345,34 @@
    </hints>
   </connection>
   <connection>
-   <sender>input__info_viwe_btn</sender>
-   <signal>clicked()</signal>
+   <sender>date_table</sender>
+   <signal>clicked(QDate)</signal>
    <receiver>Form</receiver>
-   <slot>decide_info()</slot>
+   <slot>date_cho()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>358</x>
-     <y>528</y>
+     <x>300</x>
+     <y>175</y>
     </hint>
     <hint type="destinationlabel">
-     <x>446</x>
-     <y>584</y>
+     <x>393</x>
+     <y>295</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>select_difficulty</sender>
+   <signal>itemSelectionChanged()</signal>
+   <receiver>Form</receiver>
+   <slot>difficulty_select()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>447</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>496</x>
+     <y>292</y>
     </hint>
    </hints>
   </connection>
@@ -327,5 +380,9 @@
  <slots>
   <slot>decide_info()</slot>
   <slot>make_party()</slot>
+  <slot>date_cho()</slot>
+  <slot>Legions_btn()</slot>
+  <slot>challenge_conten_btn()</slot>
+  <slot>difficulty_select()</slot>
  </slots>
 </ui>
