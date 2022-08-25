@@ -30,6 +30,12 @@ class main_class(QMainWindow, main_form_class):
         self.setupUi(self)
         #데이터베이스에서 가져온 보유캐릭터 정보 넣을 전역변수 선언 
         global have_char_info
+        global login_my_id
+        global login_my_topchar
+
+        login_my_id = login.input_login_userid
+        login_my_topchar = login.result_login[0][2]
+
 
     
 
@@ -49,7 +55,7 @@ class main_class(QMainWindow, main_form_class):
         cursor.execute(sql)
         #sql구문 실행한 결과값을 result에 대입
         result = cursor.fetchall()
-        conn.close()
+        # conn.close()
         #데이터베이스에서 가져온 보유캐릭터 정보 전역변수로 입력
 
         # 보유캐릭터 정보 넣을 전역변수에 데이터 대입

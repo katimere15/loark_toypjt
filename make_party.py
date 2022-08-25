@@ -3,6 +3,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 import main
+import pymysql
 
 
 
@@ -38,162 +39,208 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
     def date_cho(self):
 
         #선택한 날짜를 Qdate 형식으로 가져옴
-        self.cho_date = self.date_table.selectedDate()
-        #Qdate로 형식의 cho_date를 문자로 변환해서 str_date에 대입
-        self.str_date = self.cho_date.toString()
-        #요일,월,일,연도순으로 되어있는 문자열 self.str_date을 연도,월,일,요일 순으로 정리
-        self.lst_date = self.str_date.split()
-        self.remove_date = self.lst_date[3],self.lst_date[1],self.lst_date[2]
-        # YYYY-MM-DD순으로 정리된 변수
-        self.set_date = '-'.join(self.remove_date)
-
-
+        cho_data = self.date_table.selectedDate()
+        #Qdate형식의 변수를 문자열로 포메팅
+        self.cho_date = cho_data.toString("yyyy-MM-dd")
 
         # 캘린더 아래 선택된 날자 텍스트로 보여줌
-        self.view_cho_date.setText("선택된 날짜 : %s" %self.set_date)
-        print(self.set_date)
-        
+        self.view_date.setText(self.cho_date)
+    
 
 
 #######################################################################################################
 
+#######################################################################################################
+#시간 선택 부분
+    def time_cho(self):
+        # 선택한 시간을 qtime형식으로 가져옴
+        time_data = self.time_table.time()
+        #Qtime형식의 변수를 문자열로 포메팅
+        self.cho_time = time_data.toString("hh:mm")
+
+        self.view_time.setText(self.cho_time)
+
+#파티이름 입력 부분
+    def partyname_input(self):
+        self.partyname_data = self.partyname_table.text()
+        self.view_partyname.setText(self.partyname_data)
+
+
+
+#######################################################################################################
 
 #######################################################################################################
 #정보입력 부분
     #난이도 선택 부분
     def difficulty_select(self):
-        #선택 레이드 종류데이터를 가져옴 
-        Legions_value = self.raid_info
+
 
         #select_difficulty 부분에서 선택된 난이도 값을 difficulty_value로 저장
-        difficulty_value = self.select_difficulty.selectedItems()
+        self.difficulty_value = self.select_difficulty.selectedItems()
 
         # 캐릭터 선택 리스트 초기화
         self.select_character.clear()
 
         # difficulty_value는 리스트 타입이기떄문에 text()함수 사용해서 이용        
-        for item in difficulty_value:
-            difficulty_value = item.text()
+        for item in self.difficulty_value:
+            self.difficulty_value = item.text()
 
-            # 만약 선택된 Legions_value값이 발탄이고 difficulty_value값이 노말 일떄 캐릭터레벨 1415이상의 캐릭터 정보 select_character list에 저장
-            if Legions_value == "발탄" and difficulty_value == "노말":
+            self.party_info = self.raid_info + self.difficulty_value
+
+            # 만약 선택된 self.raid_info값이 발탄이고 difficulty_value값이 노말 일떄 캐릭터레벨 1415이상의 캐릭터 정보 select_character list에 저장
+            if self.raid_info == "발탄" and self.difficulty_value == "노말":
                 for i in main.have_char_info:
                     if 1415 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
 
-            # 만약 선택된 Legions_value값이 발탄이고 difficulty_value값이 하드나 헬 일떄 캐릭터레벨 1445이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "발탄" and difficulty_value in ["하드","헬"]:
+            # 만약 선택된 self.raid_info값이 발탄이고 difficulty_value값이 하드나 헬 일떄 캐릭터레벨 1445이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "발탄" and self.difficulty_value in ["하드","헬"]:
                 for i in main.have_char_info:
                     if 1445 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
 
-            # 만약 선택된 Legions_value값이 비아키스이고 difficulty_value값이 노말 일떄 캐릭터레벨 1430이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "비아키스" and difficulty_value == "노말":
+            # 만약 선택된 self.raid_info값이 비아키스이고 difficulty_value값이 노말 일떄 캐릭터레벨 1430이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "비아키스" and self.difficulty_value == "노말":
                 for i in main.have_char_info:
                     if 1430 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
-            # 만약 선택된 Legions_value값이 비아키스이고 difficulty_value값이 하드나 헬 일떄 캐릭터레벨 1460이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "비아키스" and difficulty_value in ["하드","헬"]:
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
+
+            # 만약 선택된 self.raid_info값이 비아키스이고 difficulty_value값이 하드나 헬 일떄 캐릭터레벨 1460이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "비아키스" and self.difficulty_value in ["하드","헬"]:
                 for i in main.have_char_info:
                     if 1460 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
 
-            # 만약 선택된 Legions_value값이 쿠크세이튼이고 difficulty_value값이 노말 일떄 캐릭터레벨 1475이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "쿠크세이튼" and difficulty_value in ["노말","헬"]:
+            # 만약 선택된 self.raid_info값이 쿠크세이튼이고 difficulty_value값이 노말 일떄 캐릭터레벨 1475이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "쿠크세이튼" and self.difficulty_value in ["노말","헬"]:
                 for i in main.have_char_info:
                     if 1475 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
 
-            # 만약 선택된 Legions_value값이 아브렐슈드이고 difficulty_value값이 노말 1~2 일떄 캐릭터레벨 1490이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "아브렐슈드" and difficulty_value == "노말 1~2":
+            # 만약 선택된 self.raid_info값이 아브렐슈드이고 difficulty_value값이 노말 1~2 일떄 캐릭터레벨 1490이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "아브렐슈드" and self.difficulty_value == "노말 1~2":
                 for i in main.have_char_info:
                     if 1490 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
 
-            # 만약 선택된 Legions_value값이 아브렐슈드이고 difficulty_value값이 노말 1~4 일떄 캐릭터레벨 1500이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "아브렐슈드" and difficulty_value == "노말 1~4":
+            # 만약 선택된 self.raid_info값이 아브렐슈드이고 difficulty_value값이 노말 1~4 일떄 캐릭터레벨 1500이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "아브렐슈드" and self.difficulty_value == "노말 1~4":
                 for i in main.have_char_info:
                     if 1500 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
 
-            # 만약 선택된 Legions_value값이 아브렐슈드이고 difficulty_value값이 노말 5~6 일떄 캐릭터레벨 1520이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "아브렐슈드" and difficulty_value == "노말 5~6":
+            # 만약 선택된 self.raid_info값이 아브렐슈드이고 difficulty_value값이 노말 5~6 일떄 캐릭터레벨 1520이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "아브렐슈드" and self.difficulty_value == "노말 5~6":
                 for i in main.have_char_info:
                     if 1520 <=int(i[1]):
-                        self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])     
+                        self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)   
 
-            # 만약 선택된 Legions_value값이 아브렐슈드이고 difficulty_value값이 하드 1~2 일떄 캐릭터레벨 1540이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "아브렐슈드" and difficulty_value == "하드 1~2":
+            # 만약 선택된 self.raid_info값이 아브렐슈드이고 difficulty_value값이 하드 1~2 일떄 캐릭터레벨 1540이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "아브렐슈드" and self.difficulty_value == "하드 1~2":
                 for i in main.have_char_info:
                     if 1540 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
 
-            # 만약 선택된 Legions_value값이 아브렐슈드이고 difficulty_value값이 하드 1~4 일떄 캐릭터레벨 1550이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "아브렐슈드" and difficulty_value == "하드 1~4":
+            # 만약 선택된 self.raid_info값이 아브렐슈드이고 difficulty_value값이 하드 1~4 일떄 캐릭터레벨 1550이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "아브렐슈드" and self.difficulty_value == "하드 1~4":
                 for i in main.have_char_info:
                     if 1550 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
-            # 만약 선택된 Legions_value값이 아브렐슈드이고 difficulty_value값이 하드 5~6 일떄 캐릭터레벨 1560이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "아브렐슈드" and difficulty_value == "하드 5~6":
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
+            # 만약 선택된 self.raid_info값이 아브렐슈드이고 difficulty_value값이 하드 5~6 일떄 캐릭터레벨 1560이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "아브렐슈드" and self.difficulty_value == "하드 5~6":
                 for i in main.have_char_info:
                     if 1560 <=int(i[1]):
-                        self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])        
+                        self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)    
 
-            # 만약 선택된 Legions_value값이 일리아칸이고 difficulty_value값이 노말 일떄 캐릭터레벨 1580이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "일리아칸" and difficulty_value == "노말":
+            # 만약 선택된 self.raid_info값이 일리아칸이고 difficulty_value값이 노말 일떄 캐릭터레벨 1580이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "일리아칸" and self.difficulty_value == "노말":
                 for i in main.have_char_info:
                     if 1580 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
-            # 만약 선택된 Legions_value값이 일리아칸이고 difficulty_value값이 하드  일떄 캐릭터레벨 1600이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "일리아칸" and difficulty_value == "하드":
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
+
+            # 만약 선택된 self.raid_info값이 일리아칸이고 difficulty_value값이 하드  일떄 캐릭터레벨 1600이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "일리아칸" and self.difficulty_value == "하드":
                 for i in main.have_char_info:
                     if 1600 <=int(i[1]):
-                        self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])     
+                        self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)   
 
-            # 만약 선택된 Legions_value값이 카양겔이고 difficulty_value값이 노말 일떄 캐릭터레벨 1475이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "카양겔" and difficulty_value == "노말":
+            # 만약 선택된 self.raid_info값이 카양겔이고 difficulty_value값이 노말 일떄 캐릭터레벨 1475이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "카양겔" and self.difficulty_value == "노말":
                 for i in main.have_char_info:
                     if 1475 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
 
-            # 만약 선택된 Legions_value값이 카양겔이고 difficulty_value값이 하드1 일떄 캐릭터레벨 1520이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "카양겔" and difficulty_value == "하드1":
+            # 만약 선택된 self.raid_info값이 카양겔이고 difficulty_value값이 하드1 일떄 캐릭터레벨 1520이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "카양겔" and self.difficulty_value == "하드1":
                 for i in main.have_char_info:
                     if 1520 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
 
-            # 만약 선택된 Legions_value값이 카양겔이고 difficulty_value값이 하드2 일떄 캐릭터레벨 1560이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "카양겔" and difficulty_value == "하드2":
+            # 만약 선택된 self.raid_info값이 카양겔이고 difficulty_value값이 하드2 일떄 캐릭터레벨 1560이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "카양겔" and self.difficulty_value == "하드2":
                 for i in main.have_char_info:
                     if 1560 <=int(i[1]):
                         self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)
 
-            # 만약 선택된 Legions_value값이 카양겔이고 difficulty_value값이 하드3 일떄 캐릭터레벨 1580이상의 캐릭터 정보 select_character list에 저장
-            elif Legions_value == "카양겔" and difficulty_value == "하드3":
+            # 만약 선택된 self.raid_info값이 카양겔이고 difficulty_value값이 하드3 일떄 캐릭터레벨 1580이상의 캐릭터 정보 select_character list에 저장
+            elif self.raid_info == "카양겔" and self.difficulty_value == "하드3":
                 for i in main.have_char_info:
                     if 1580 <=int(i[1]):
-                        self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])                                                
+                        self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])  
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.party_info)                                             
 
 
 
 
     #레이드 선택 부분            
-    def Legions_btn(self):
+    def Legions_cho(self):
         #isChecked은 radio 요소를 선택했을떄 
         if self.valtan.isChecked():
             self.raid_info = "발탄"
             self.select_difficulty.clear()
+            self.select_character.clear()
             #난이도 창에 난이도 추가    
             self.select_difficulty.addItem("노말")
             self.select_difficulty.addItem("하드")
             self.select_difficulty.addItem("헬")
-            # #선택한 레이드에 맞는 래벨대의 캐릭터 콤보박스에 추가
-            # for i in main.have_char_info:
-            #     if 1415 <=int(i[1]):
-            #         self.select_difficulty.addItem(i[0]+"  LV. "+i[1])
+
         elif self.bykas.isChecked():
             self.raid_info = "비아키스"
             self.select_difficulty.clear()
+            self.select_character.clear()
             #난이도 창에 난이도 추가    
             self.select_difficulty.addItem("노말")
             self.select_difficulty.addItem("하드")
@@ -203,6 +250,7 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
         elif self.kakul_saydon.isChecked():
             self.raid_info = "쿠크세이튼"
             self.select_difficulty.clear()
+            self.select_character.clear()
             #난이도 창에 난이도 추가    
             self.select_difficulty.addItem("노말")
             self.select_difficulty.addItem("헬")
@@ -210,6 +258,7 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
         elif self.brelshaza.isChecked():
             self.raid_info = "아브렐슈드"
             self.select_difficulty.clear()
+            self.select_character.clear()
             #난이도 창에 난이도 추가    
             self.select_difficulty.addItem("노말 1~2")
             self.select_difficulty.addItem("노말 1~4")
@@ -222,6 +271,7 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
         elif self.kayanggel.isChecked():
             self.raid_info = "카양겔"
             self.select_difficulty.clear()
+            self.select_character.clear()
             #난이도 창에 난이도 추가    
             self.select_difficulty.addItem("노말")
             self.select_difficulty.addItem("하드1")
@@ -231,6 +281,7 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
         elif self.akkan.isChecked():
             self.raid_info = "일리아칸"
             self.select_difficulty.clear()
+            self.select_character.clear()
             #난이도 창에 난이도 추가    
             self.select_difficulty.addItem("노말")
             self.select_difficulty.addItem("하드")
@@ -238,25 +289,90 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
 
 
 
-    #보정컨탠츠
-    def challenge_conten_btn(self):
-        pass
+
+
+
+    #도전컨텐츠 클릭했을떄
+    def challeng_content(self):
+        if self.guardian.isChecked():
+
+            self.raid_info = "도가토"
+            #난이도부분과 캐릭터 부분 초기화
+            self.select_difficulty.clear()
+            self.select_character.clear()
+            #선택한 컨텐츠를 즐길수 있는 래벨대의 캐릭터 부분에 추가
+            for i in main.have_char_info:
+                if 415 <=int(i[1]):
+                    self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+            #선택한 파티정보 부분의 파티정보에 텍스트 추가
+            self.view_raid.setText(self.raid_info)
+
+        if self.abyss.isChecked():
+            self.raid_info = "도비스"
+            #난이도부분과 캐릭터 부분 초기화
+            self.select_difficulty.clear()
+            self.select_character.clear()
+            #선택한 컨텐츠를 즐길수 있는 래벨대의 캐릭터 부분에 추가
+            for i in main.have_char_info:
+                if 415 <=int(i[1]):
+                    self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+                self.view_raid.setText(self.raid_info)
+
+        if self.rehearsal.isChecked():
+            self.raid_info = "리허설"
+            #난이도부분과 캐릭터 부분 초기화
+            self.select_difficulty.clear()
+            self.select_character.clear()
+            #선택한 컨텐츠를 즐길수 있는 래벨대의 캐릭터 부분에 추가
+            for i in main.have_char_info:
+                if 1385 <=int(i[1]):
+                    self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+            self.view_raid.setText(self.raid_info)
+
+        if self.dejavu.isChecked():
+            self.raid_info = "데자뷰"
+            #난이도부분과 캐릭터 부분 초기화
+            self.select_difficulty.clear()
+            self.select_character.clear()
+            #선택한 컨텐츠를 즐길수 있는 래벨대의 캐릭터 부분에 추가
+            for i in main.have_char_info:
+                if 1430 <=int(i[1]):
+                    self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+            self.view_raid.setText(self.raid_info)
+
+        if self.epidemic.isChecked():
+            self.raid_info = "에피데믹"
+            #난이도부분과 캐릭터 부분 초기화
+            self.select_difficulty.clear()
+            self.select_character.clear()
+            #선택한 컨텐츠를 즐길수 있는 래벨대의 캐릭터 부분에 추가
+            for i in main.have_char_info:
+                if 1500 <=int(i[1]):
+                    self.select_character.addItem(i[0]+"  LV. "+i[1]+"  "+i[2])
+                #선택한 파티정보 부분의 파티정보에 텍스트 추가
+            self.view_raid.setText(self.raid_info)
+
+
+
+
+    #캐릭터 선택 부분
+    def char_cho(self):
+
+        # 선택한 캐릭터을 가져옴
+        self.char_data = self.select_character.currentItem().text()
+        self.view_char.setText(self.char_data)
         
 
 
-    #결정하기 버튼 눌렀을때 이벤트
-    def decide_info(self):
-        pass
 
 
 
 
 
 
-
-        #선택한 파티정보 부분으로 날릴 변수
-        # date_info = self.set_date
-        # raid_info = self.raid_info
 
 
 
@@ -268,8 +384,26 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
 #######################################################################################################
 #선택한 파티정보 부분
     #만들기 버튼눌렀을떄 이벤트
-    def make_party(self):
-        pass
+    def make_btn(self):
+        if self.partyname_table.text() == "":
+            self.partyname_data = "%s 님의 즐거운 %s 파티"%(main.login_my_topchar,self.view_raid.text())
+
+        conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
+        sql = "INSERT INTO `lostark`.`party_table` (`raid_name`, `party_name`, `havechar_userinfo_userid`, `havechar_charname`, `party_starttime`, `party_startdate`) VALUES (%s,%s,%s,%s,%s,%s);"
+
+        set_view_char=self.view_char.text().split("  LV")
+        with conn:
+            with conn.cursor() as cur:
+                cur.execute(sql,(self.view_raid.text(), self.partyname_data, main.login_my_id, set_view_char[0], self.view_time.text(), self.view_date.text()))
+
+                conn.commit()
+
+        QMessageBox.information(self,"메인창으로","파티가 만들어졌습니다.")
+        self.close()
+
+        # set_view_char=self.view_char.text().split("LV")
+        # # print(type(set_view_char[0]))
+        # print(self.view_raid.text(), self.partyname_data, main.login_my_id, set_view_char[0], self.view_time.text(), self.view_date.text())
 
 
 
