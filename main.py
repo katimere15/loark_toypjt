@@ -3,7 +3,7 @@ import sys
 import pymysql
 import requests
 import login,make_party
-
+from datetime import datetime
 from bs4 import BeautifulSoup
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
@@ -30,6 +30,7 @@ class main_class(QMainWindow, main_form_class):
         self.setupUi(self)
         #데이터베이스에서 가져온 보유캐릭터 정보 넣을 전역변수 선언 
         global have_char_info
+        global all_view_party_sql
         global login_my_id
         global login_my_topchar
 
@@ -57,6 +58,21 @@ class main_class(QMainWindow, main_form_class):
         result = cursor.fetchall()
         # conn.close()
         #데이터베이스에서 가져온 보유캐릭터 정보 전역변수로 입력
+
+        # 모든 파티 정보 가져오기
+        view_party_sql = "select party_name,raid_name,party_startdate,party_starttime from party_table where party_startdate > (now()-INTERVAL 1 DAY) order by party_startdate, party_starttime"
+        cursor.execute(view_party_sql)
+        all_view_party_sql = cursor.fetchall()
+        
+        for i in all_view_party_sql:
+            str_party= i[0]+"\n"+i[2].isoformat()+"\n"+str(i[3])
+            self.view_party_info.addItem(str_party)
+            # print(str_party)
+
+
+
+
+
 
         # 보유캐릭터 정보 넣을 전역변수에 데이터 대입
         have_char_info = result
@@ -108,7 +124,11 @@ class main_class(QMainWindow, main_form_class):
     #파티만들기 버튼
     def make_party_step(self):
         self.make_party_page = make_party.make_party_class()
-        self.make_party_page.show()   
+        self.make_party_page.exec()
+
+
+
+
         
     #파티취소 버튼
     def drop_party(self):

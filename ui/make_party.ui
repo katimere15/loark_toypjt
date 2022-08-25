@@ -233,7 +233,7 @@
            <item>
             <widget class="QLabel" name="view_date">
              <property name="text">
-              <string>선택된 날짜 : </string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -249,7 +249,7 @@
            <item>
             <widget class="QLabel" name="view_time">
              <property name="text">
-              <string>시작 시간 : </string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -265,7 +265,7 @@
            <item>
             <widget class="QLabel" name="view_raid">
              <property name="text">
-              <string>파티 종류 : </string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -297,7 +297,7 @@
            <item>
             <widget class="QLabel" name="view_char">
              <property name="text">
-              <string>선택된 캐릭터 : </string>
+              <string/>
              </property>
             </widget>
            </item>

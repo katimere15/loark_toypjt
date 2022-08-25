@@ -385,25 +385,31 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
 #선택한 파티정보 부분
     #만들기 버튼눌렀을떄 이벤트
     def make_btn(self):
-        if self.partyname_table.text() == "":
-            self.partyname_data = "%s 님의 즐거운 %s 파티"%(main.login_my_topchar,self.view_raid.text())
+        if self.view_date.text() == "":
+            QMessageBox.information(self,"확인","날짜 선택이 안됬음 날짜 선택해주셈")
+        elif self.view_time.text() == "":
+            QMessageBox.information(self,"확인","시간 선택이 안됬음 시간 선택해주셈")
+        elif self.view_raid.text() == "":
+            QMessageBox.information(self,"확인","파티 선택이 안됬음 파티 선택해주셈")
+        elif self.view_char.text() == "":
+            QMessageBox.information(self,"확인","캐릭 선택이 안됬음 캐릭 선택해주셈")        
+        else:
+            if self.partyname_table.text() == "":
+                self.partyname_data = "%s 님의 즐거운 %s 파티"%(main.login_my_topchar,self.view_raid.text())
 
-        conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
-        sql = "INSERT INTO `lostark`.`party_table` (`raid_name`, `party_name`, `havechar_userinfo_userid`, `havechar_charname`, `party_starttime`, `party_startdate`) VALUES (%s,%s,%s,%s,%s,%s);"
+            conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
+            sql = "INSERT INTO `lostark`.`party_table` (`raid_name`, `party_name`, `havechar_userinfo_userid`, `havechar_charname`, `party_starttime`, `party_startdate`) VALUES (%s,%s,%s,%s,%s,%s);"
 
-        set_view_char=self.view_char.text().split("  LV")
-        with conn:
-            with conn.cursor() as cur:
-                cur.execute(sql,(self.view_raid.text(), self.partyname_data, main.login_my_id, set_view_char[0], self.view_time.text(), self.view_date.text()))
+            set_view_char=self.view_char.text().split("  LV")
+            with conn:
+                with conn.cursor() as cur:
+                    cur.execute(sql,(self.view_raid.text(), self.partyname_data, main.login_my_id, set_view_char[0], self.view_time.text(), self.view_date.text()))
 
-                conn.commit()
+                    conn.commit()
 
-        QMessageBox.information(self,"메인창으로","파티가 만들어졌습니다.")
-        self.close()
+            QMessageBox.information(self,"메인창으로","파티가 만들어졌셈")
 
-        # set_view_char=self.view_char.text().split("LV")
-        # # print(type(set_view_char[0]))
-        # print(self.view_raid.text(), self.partyname_data, main.login_my_id, set_view_char[0], self.view_time.text(), self.view_date.text())
+            self.close()
 
 
 
