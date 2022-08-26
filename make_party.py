@@ -403,11 +403,9 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
             #선택한 파티정보의 데이터를 party_table에 추가하는 sql
             sql = "INSERT INTO `lostark`.`party_table` (`raid_name`, `party_name`, `havechar_userinfo_userid`, `havechar_charname`, `party_starttime`, `party_startdate`) VALUES (%s,%s,%s,%s,%s,%s);"
             #만들어진 파티정보 테이블과 보유 캐릭터 테이블을 조인해서 내가 입력한 캐릭터 정보를 가져오는 sql
-            party_member_sql = """select max(party_num),havechar_charname,charlevel,charjob
-                            from party_table a,havechar b
-                            where a.havechar_charname = b.charname;"""
+            party_member_sql = "select max(party_num),charname,charlevel,charjob from party_table,havechar where charname = %s"
             #party_member_sql의 결과를 party_member테이블에 추가하는 sql
-            input_member_sql = "INSERT INTO `lostark`.`party_member_table` (`party_table_party_num`, `party_member_charname`, `party_member_charlevel`, `party_member_charjob`,`userinfo_userid`) VALUES (%s, %s, %s, %s,%s);"
+            input_member_sql = "INSERT INTO `lostark`.`party_member_table` (`userid`,`party_table_party_num`, `party_member_charname`, `party_member_charlevel`, `party_member_charjob`) VALUES (%s,%s, %s, %s, %s);"
 
 
             set_view_char=self.view_char.text().split("  LV")
@@ -418,12 +416,14 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
                     conn.commit()
 
                     # 만들어진 파티정보 테이블과 보유 캐릭터 테이블을 조인해서 내가 입력한 캐릭터 정보를 가져옴
-                    cursor.execute(party_member_sql)
-                    party_member = cursor.fetchall()
-
+                    cursor.execute(party_member_sql,(set_view_char[0]))
+                    make_party_member = cursor.fetchall()
+                    print(make_party_member)
                     #party_member_sql의 결과를 party_member테이블에 추가
-                    cur.execute(input_member_sql,(party_member[0][0],party_member[0][1],party_member[0][2],party_member[0][3], main.login_my_id))
+                    cur.execute(input_member_sql,(main.login_my_id,make_party_member[0][0],make_party_member[0][1],make_party_member[0][2],make_party_member[0][3]))
                     conn.commit()
+                    QMessageBox.information(self,"확인","파티 만들어졌셈")  
+
 
 
 

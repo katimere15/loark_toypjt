@@ -34,6 +34,7 @@ class main_class(QMainWindow, main_form_class):
         global login_my_id
         global login_my_topchar
 
+
         login_my_id = login.input_login_userid
         login_my_topchar = login.result_login[0][2]
 
@@ -72,7 +73,7 @@ class main_class(QMainWindow, main_form_class):
         cursor.execute(view_party_sql)
         all_view_party_sql = cursor.fetchall()
         #내 파티 정보 가져오기
-        view_my_party_sql="select party_num,party_name,raid_name,party_startdate,party_starttime from party_table where havechar_userinfo_userid = %s"%login.input_login_userid
+        view_my_party_sql="select party_num,party_name,raid_name,party_startdate,party_starttime from party_table where party_startdate > (now()-INTERVAL 1 DAY) and havechar_userinfo_userid =%s order by party_startdate, party_starttime"%login.input_login_userid
         cursor.execute(view_my_party_sql)
         my_party_sql = cursor.fetchall()
 
@@ -124,6 +125,7 @@ class main_class(QMainWindow, main_form_class):
             #party_name값은 text_output3[0] 이다.
         #선택한 파티 이름 보여주기
         self.cho_party_title.setText(text_output3[0])
+        self.cho_party_time.setText(text_output2[2]+"  "+text_output2[3])
 
         #파티맴버 리스트 가져와 추가하기
         conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
@@ -261,62 +263,45 @@ class main_class(QMainWindow, main_form_class):
 #파티자리 확인 부분
     #파티신청버튼
     def join_party(self):
-        pass
-
         # try:
-        #     #선택한 radio박스의 데이터를 가져옴
-        #     select_charte = self.partyjoin_charcho.currentText()
+        #선택한 radio박스의 데이터를 가져옴
+        select_charte = self.partyjoin_charcho.currentText()
 
-        #     #데이터베이스에 넣을수 있게 list로 변환
-        #     cut_select_charte=select_charte.split("  ")
-        #     cut_select_charte[1]=cut_select_charte[1].lstrip("Lv. ")
+        # #radio데이터를 데이터베이스에 넣을수 있게 list로 변환
+        cut_select_charte=select_charte.split("  ")
+        cut_select_charte[1]=cut_select_charte[1].lstrip("Lv. ")
+        print(cut_select_charte)
 
 
-        #     #radio박스의 데이터를 db에 넣는 sql문
-        #     cut_select_charte_sql = "INSERT INTO `lostark`.`party_member_table` (`party_table_party_num`, `party_member_charname`, `party_member_charlevel`, `party_member_charjob`,`userinfo_userid`) VALUES (%s,%s,%s,%s,%s);"
-        #     #db의 파티멤버를 조회하는 sql문
-        #     partymember_sql = "select party_member_charname,party_member_charlevel,party_member_charjob,userinfo_userid from party_member_table where party_table_party_num = %s;"%select_party_num
-        #     #db연결
-        #     conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
-        #     cursor = conn.cursor()
-        #     #파티멤버를 조회하는 sql문 실행해서 partymember로 저장
-        #     with conn:
-        #         with conn.cursor() as cur:
-        #             cursor.execute(partymember_sql)
-        #             partymember = cursor.fetchall()
-        #             print(cut_select_charte)
-        #             partymember_char_list =[]
-        #             have_char_info_list=[]
-        #             triger_num= 0
-        #             for i in partymember:
-        #                 partymember_char_list.append(i[0])
-        #             for i in have_char_info:
-        #                 have_char_info_list.append(i[0])
-        #             for i in partymember_char_list:
-        #                 if i in have_char_info_list:
-        #                     triger_num=1
-                        
+        party_member_sql = "select userid,party_member_charname,party_table_party_num from party_member_table"
+        conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
+        with conn:
+            with conn.cursor() as cur:
+                #party_member_sql의 결과를 party_member테이블에 추가
+                cur.execute(party_member_sql)
+                party_member = cur.fetchall()
+                #현재 파티맴버 정보 
+        party_member_list=[]
+        for i in party_member:
+            party_member_list.append(i[0])
 
-        #     #만약 파티멤버에 나의 캐릭터가 존재하면 else 실행
-        #             if have_char_info[0] in partymember_char_list:
-        #                 QMessageBox.information(self,"바뻘","이미 선생님의 캐릭터가 신청되어있으셈")
-        #             else:
-        #                 cur.execute(cut_select_charte_sql, (select_party_num,cut_select_charte[0],cut_select_charte[1],cut_select_charte[2],login_my_id))
-        #                 conn.commit()
-        #             #파티자리 부분 리스트 제거
-        #             self.view_partyseat_info.clear()
-        #             cursor.execute(partymember_sql)
-        #             #sql문 실행해서 새로운 파티멤버가 추가된 데이터를 가져옴
-        #             partymember2 = cursor.fetchall()
-        #             # 추가된 데이터를 파티자리 부분 리스트에 추가
-        #             for i in partymember2:
-        #                 print(i)
-        #                 str_partymember= i[0]+"\n"+"Lv. "+ i[1] +"\n"+ i[2]
-        #                 self.view_partyseat_info.addItem(str_partymember)
-        #                 QMessageBox.information(self,"바뻘","신청 완료되썰")
 
-        # except IndexError:
-        #     QMessageBox.information(self,"바뻘","캐릭터 선택이 안되있지않셈")
+
+
+        if login_my_id in party_member_list:
+            QMessageBox.information(self,"바뻘","이미 선생님의 캐릭터가 신청되어있으셈")
+        else:
+            print("sad")
+            insert_partyjoin = "INSERT INTO `lostark`.`party_member_table` (`userid`, `party_table_party_num`, `party_member_charname`, `party_member_charlevel`, `party_member_charjob`) VALUES (%s,%s,%s,%s,%s);"
+            conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
+
+            with conn:
+                with conn.cursor() as cur:
+                    cur.execute(insert_partyjoin, (login_my_id,select_party_num,cut_select_charte[0],cut_select_charte[1],cut_select_charte[2]))
+                    conn.commit()
+            QMessageBox.information(self,"ok","신청 완료셈")
+            str_partymember= cut_select_charte[0]+"\n"+"Lv. "+ cut_select_charte[1] +"\n"+ cut_select_charte[2]
+            self.view_partyseat_info.addItem(str_partymember)
 
 
 
@@ -333,7 +318,6 @@ class main_class(QMainWindow, main_form_class):
         self.make_party_page = make_party.make_party_class()
         self.make_party_page.exec()
         #파티보이는 창 리셋
-        self.view_party_info.clear()
 
         conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
         cursor = conn.cursor()
@@ -344,11 +328,14 @@ class main_class(QMainWindow, main_form_class):
         all_view_party_sql = cursor.fetchall()
 
         #내 파티 정보 가져오기
-        view_my_party_sql="select party_num,party_name,raid_name,party_startdate,party_starttime from party_table where havechar_userinfo_userid = %s"%login.input_login_userid
+        view_my_party_sql="select party_num,party_name,raid_name,party_startdate,party_starttime from party_table where party_startdate > (now()-INTERVAL 1 DAY) and havechar_userinfo_userid =%s order by party_startdate, party_starttime"%login.input_login_userid
         cursor.execute(view_my_party_sql)
         my_party_sql = cursor.fetchall()
 
-        
+        #파티보이는 창 리셋
+        self.view_party_info.clear()
+        self.made_myparty_list.clear()
+        #모든 파티정보 입력
         for i in all_view_party_sql:
             str_party= i[1]+"                                               "+str(i[0])+"\n"+i[2] +"\n"+i[3].isoformat()+"\n"+str(i[4])
             self.view_party_info.addItem(str_party)
@@ -356,7 +343,7 @@ class main_class(QMainWindow, main_form_class):
         for i in my_party_sql:
             str_myparty= i[1]+"                                               "+str(i[0])+"\n"+i[2] +"\n"+i[3].isoformat()+"\n"+str(i[4])
             self.made_myparty_list.addItem(str_myparty)
-            # print(str_party)
+
 
 
     #파티취소 버튼
