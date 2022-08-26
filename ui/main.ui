@@ -195,18 +195,11 @@
        <height>601</height>
       </rect>
      </property>
-    </widget>
-    <widget class="QPushButton" name="cho_party_btn">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>660</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
-     <property name="text">
-      <string>파티선택</string>
+     <property name="horizontalScrollMode">
+      <enum>QAbstractItemView::ScrollPerItem</enum>
      </property>
     </widget>
    </widget>
@@ -222,16 +215,6 @@
     <property name="title">
      <string>파티자리 확인</string>
     </property>
-    <widget class="QListWidget" name="view_partyseat_info">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>90</y>
-       <width>256</width>
-       <height>561</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="cho_party_title">
      <property name="geometry">
       <rect>
@@ -248,7 +231,7 @@
     <widget class="QPushButton" name="cho_partyseat_btn">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>90</x>
        <y>660</y>
        <width>75</width>
        <height>23</height>
@@ -256,6 +239,34 @@
      </property>
      <property name="text">
       <string>파티신청</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>581</y>
+       <width>261</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>신청 캐릭터 선택</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QComboBox" name="partyjoin_charcho"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QListWidget" name="view_partyseat_info">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>256</width>
+       <height>471</height>
+      </rect>
      </property>
     </widget>
    </widget>
@@ -373,6 +384,9 @@
        <height>211</height>
       </rect>
      </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
     </widget>
     <widget class="QPushButton" name="drop_party_btn">
      <property name="geometry">
@@ -433,38 +447,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>cho_party_btn</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>look_at_party()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>565</x>
-     <y>724</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>544</x>
-     <y>781</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cho_partyseat_btn</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>join_party()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>892</x>
-     <y>726</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>874</x>
-     <y>782</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>making_party_btn</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -497,28 +479,77 @@
    </hints>
   </connection>
   <connection>
+   <sender>cho_partyseat_btn</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>join_party()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>814</x>
+     <y>733</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>867</x>
+     <y>777</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>drop_select_byn</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>drop_joinparty()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1203</x>
-     <y>718</y>
+     <x>1226</x>
+     <y>726</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1145</x>
-     <y>776</y>
+     <x>1189</x>
+     <y>775</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>view_party_info</sender>
+   <signal>itemClicked(QListWidgetItem*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>view_partymember()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>514</x>
+     <y>648</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>614</x>
+     <y>41</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>made_myparty_list</sender>
+   <signal>itemClicked(QListWidgetItem*)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>view_mypartymember()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1061</x>
+     <y>191</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>933</x>
+     <y>32</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>mychar_info()</slot>
-  <slot>look_at_party()</slot>
   <slot>join_party()</slot>
   <slot>make_party_step()</slot>
   <slot>drop_party()</slot>
   <slot>drop_joinparty()</slot>
+  <slot>view_partymember()</slot>
+  <slot>view_mypartymember()</slot>
  </slots>
 </ui>

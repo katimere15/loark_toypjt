@@ -398,16 +398,36 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
                 self.partyname_data = "%s 님의 즐거운 %s 파티"%(main.login_my_topchar,self.view_raid.text())
 
             conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
+
+            cursor = conn.cursor()
+            #선택한 파티정보의 데이터를 party_table에 추가하는 sql
             sql = "INSERT INTO `lostark`.`party_table` (`raid_name`, `party_name`, `havechar_userinfo_userid`, `havechar_charname`, `party_starttime`, `party_startdate`) VALUES (%s,%s,%s,%s,%s,%s);"
+            #만들어진 파티정보 테이블과 보유 캐릭터 테이블을 조인해서 내가 입력한 캐릭터 정보를 가져오는 sql
+            party_member_sql = """select max(party_num),havechar_charname,charlevel,charjob
+                            from party_table a,havechar b
+                            where a.havechar_charname = b.charname;"""
+            #party_member_sql의 결과를 party_member테이블에 추가하는 sql
+            input_member_sql = "INSERT INTO `lostark`.`party_member_table` (`party_table_party_num`, `party_member_charname`, `party_member_charlevel`, `party_member_charjob`,`userinfo_userid`) VALUES (%s, %s, %s, %s,%s);"
+
 
             set_view_char=self.view_char.text().split("  LV")
             with conn:
                 with conn.cursor() as cur:
-                    cur.execute(sql,(self.view_raid.text(), self.partyname_data, main.login_my_id, set_view_char[0], self.view_time.text(), self.view_date.text()))
-
+                    #선택한 파티정보의 데이터를 party_table에 추가
+                    cur.execute(sql,(self.view_raid.text(), self.partyname_data, main.login_my_id, set_view_char[0], self.view_time.text(),self.view_date.text()))
                     conn.commit()
 
-            QMessageBox.information(self,"메인창으로","파티가 만들어졌셈")
+                    # 만들어진 파티정보 테이블과 보유 캐릭터 테이블을 조인해서 내가 입력한 캐릭터 정보를 가져옴
+                    cursor.execute(party_member_sql)
+                    party_member = cursor.fetchall()
+
+                    #party_member_sql의 결과를 party_member테이블에 추가
+                    cur.execute(input_member_sql,(party_member[0][0],party_member[0][1],party_member[0][2],party_member[0][3], main.login_my_id))
+                    conn.commit()
+
+
+
+
 
             self.close()
 
