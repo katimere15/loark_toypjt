@@ -1,6 +1,6 @@
 import os
 import sys
-
+import pandas as pd
 import requests
 import pymysql
 import login
@@ -39,11 +39,6 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
 
 
 
-    ############################################ 
-    def return_all_havechar(address):
-        pass
-
-    ############################################
 
 
     
@@ -61,13 +56,22 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
         elif not input_signin_topchar:
            QMessageBox.information(self,"공백없이 ok?","뭐해에에에엑!!!! 대표캐릭터이름 공백이잖아!!!!!!")
         else:
-        #로그인 페이지에서 db로 가져온 유저 테이블 데이터
+            #가져온 유저 테이블 데이터
+            curs = conn.cursor()
+            usercharter_sql = "select * from charter_table"
+            curs.execute(usercharter_sql)
+            usercharter = curs.fetchall()
+
+            usercharter_df = pd.DataFrame(usercharter,columns=['유저아이디','캐릭터이름','캐릭터래벨','캐릭터직업'])
+
         #login.login_class.userdata_df['아이디']안에 입력한 아이디값이 있을경우 
             if (login.login_class.userdata_df['아이디']==input_signin_userid).any():
                 QMessageBox.information(self,"다시입력하기","사용중인 아이디임. 다시입력하셈")
-                #login.login_class.usercharter_df['캐릭터이름']안에 입력한 대표캐릭 값이 있는경우
-            elif(login.login_class.usercharter_df['캐릭터이름']==input_signin_topchar).any():
+
+                #login_page.login_class.usercharter_df['캐릭터이름']안에 입력한 대표캐릭 값이 있는경우
+            elif(usercharter_df['캐릭터이름']==input_signin_topchar).any():
                 QMessageBox.information(self,"다시입력하기","이 캐릭터는 이미 회원가입된 상태인거 같은대 이 오류가 계속나오면 SevenNight/어머 로 DM보내셈")
+
             else:
                 #대표캐릭터이름으로 보유하고있는 모든 캐릭터정보를 스크래핑해옴
                 mycharters = def_index.return_all_havechar("https://lostark.game.onstove.com/Profile/Character/%s"%input_signin_topchar)
@@ -79,7 +83,7 @@ class signin_class(QDialog,QWidget,signinwindow_form_class):
                 #정상적으로 데이터를 불러왔을때 userid테이블에 정보입력
                 elif len_mycharters != 0:
                     
-                    curs = conn.cursor()
+                    
                     user_sql = "INSERT INTO `party`.`user_table` (`userid`, `userpw`, `maincharter`) VALUES ('%s', '%s', '%s')"%(input_signin_userid, input_signin_userpw, input_signin_topchar)
                     curs.execute(user_sql)
                     conn.commit()

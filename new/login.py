@@ -2,6 +2,7 @@ import os
 import sys
 import pymysql
 import signin
+import main
 import pandas as pd
 import numpy as np
 from PyQt5.QtWidgets import *
@@ -13,8 +14,8 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 # #메인 화면 파일 연결
-form = resource_path("./ui/login.ui")
-form_class = uic.loadUiType(form)[0]
+main_form = resource_path("./ui/login.ui")
+main_form_class = uic.loadUiType(main_form)[0]
 
 
 
@@ -49,21 +50,16 @@ form_class = uic.loadUiType(form)[0]
 
 
 
-
-class login_class(QMainWindow, form_class):
+class login_class(QMainWindow, main_form_class):
 
     #클래스가 작동하면 db연결해서 유저정보 데이터를 가져온다
     userdata_sql = "select * from user_table"
-    #클래스가 작동하면 db연결해서 등록된 캐릭터 데이터를 가져온다.
-    usercharter_sql = "select * from charter_table"
     conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='party', charset='utf8')
     curs = conn.cursor()
     #유저정보 저장
     curs.execute(userdata_sql)
     userdata = curs.fetchall()
-    #캐릭터정보 저장
-    curs.execute(usercharter_sql)
-    usercharter = curs.fetchall()
+
     curs.close()
     conn.close()
     
@@ -71,8 +67,9 @@ class login_class(QMainWindow, form_class):
 
     #db에서 가져온 데이터 pandas로 정리
     userdata_df = pd.DataFrame(userdata,columns=['아이디','비밀번호','대표캐릭터'])
-    usercharter_df = pd.DataFrame(usercharter,columns=['유저아이디','캐릭터이름','캐릭터래벨','캐릭터직업'])
-
+    
+    
+    
 
     def __init__(self):
         super(login_class,self).__init__()
@@ -81,9 +78,32 @@ class login_class(QMainWindow, form_class):
     def initui(self):
         self.setupUi(self)
 
+
     #로그인 버튼 눌렀을떄 이벤트
     def login_step(self):
-        pass
+        global input_login_userid
+        global mytopcharter
+        input_login_userid = self.login_userid.text() #login_userid text 값 가져오기
+        input_login_userpw = self.login_userpw.text() #login_userpw text 값 가져오기
+        
+        if (login_class.userdata_df['아이디']==input_login_userid).any():
+            user_infodata = login_class.userdata_df.loc[login_class.userdata_df['아이디']==input_login_userid].values.tolist()
+            if input_login_userpw == user_infodata[0][1]:
+                mytopcharter = user_infodata[0][2]
+                QMessageBox.information(self,"ok","로그인 완료하셨심")
+
+
+                self.close()
+                self.main = main.main_class()    
+                self.main.show()
+                
+
+            else:
+                QMessageBox.information(self,"ok","로그인 실패하심 다시 확인해보셈")
+        else:
+            QMessageBox.information(self,"다시입력하기","아이디,비번이 틀렸거나 회원가입을 안하심")
+
+    
     
     #회원가입 버튼눌렀을떄 이벤트
     def signin_step(self):
