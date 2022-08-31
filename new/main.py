@@ -18,7 +18,9 @@ main_form_class = uic.loadUiType(main_form)[0]
 
 
 class main_class(QDialog,QWidget, main_form_class):
-    
+
+    now_view_party_key = 0
+
     def __init__(self):
         super(main_class,self).__init__()
         self.initui()
@@ -31,6 +33,8 @@ class main_class(QDialog,QWidget, main_form_class):
         global usertopcharter
 
         global party_data
+
+        
 
 
         self.setupUi(self)
@@ -220,53 +224,6 @@ class main_class(QDialog,QWidget, main_form_class):
 
 
 
-        # # 신청한 파티 테이블
-        # #행만 추가
-        # self.mymakeparty_table.setColumnCount(6)
-
-        # #수평 정렬
-        # self.mymakeparty_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        # #행header이름 변경
-        # table_column=["","파티이름" , "종류" , "파티만든 사람" , "시작 시간","파티 인원 보기"]
-        # self.mymakeparty_table.setHorizontalHeaderLabels(table_column)
-
-        # #파티키 컬럼 숨기기
-        # self.mymakeparty_table.setColumnHidden(0, True)
-
-
-        # for i in my_party_data:
-        #     party_key = i[0]
-        #     party_name = i[3]
-        #     party_value = i[4]
-        #     party_time = i[5].strftime("%m월 %d일 %H시 %M분")
-        #     party_master = i[2]
-        #     party_member = "인원수"
-
-
-        #     #테이블안에 만들어질 버튼 시그널 연결
-        #     self.my_party_check_btn = QPushButton("인원 보기")
-        #     self.my_party_check_btn.clicked.connect(self.my_party_check_btn_signal)
-
-
-        #     rowPosition = self.mymakeparty_table.rowCount()
-        #     self.mymakeparty_table.insertRow(rowPosition)
-
-        #     #numcols은 컬럼의 숫자를 카운트하는 columnCount() 함수로 현재 컬럼의 수 가져옴
-        #     numcols = self.mymakeparty_table.columnCount()
-        #     #numrows은 열의 숫자를 카운트하는 rowCount()함수로 현재 열의 수를 가져옴
-        #     numrows = self.mymakeparty_table.rowCount()    
-        #     #현재 열의 숫자만큼 세트
-        #     self.mymakeparty_table.setRowCount(numrows)
-        #     #현재 컬럼의 숫자만큼 세트
-        #     self.mymakeparty_table.setColumnCount(numcols)
-        #     #셀의 위치는 0에서부터 시작하기떄문에 행의 숫자를 -1한 위치값에서 아이템 추가
-        #     self.mymakeparty_table.setItem(numrows -1,0,QTableWidgetItem(str(party_key)))
-        #     self.mymakeparty_table.setItem(numrows -1,1,QTableWidgetItem(party_name))
-        #     self.mymakeparty_table.setItem(numrows -1,2,QTableWidgetItem(party_value))
-        #     self.mymakeparty_table.setItem(numrows -1,3,QTableWidgetItem(party_master))
-        #     self.mymakeparty_table.setItem(numrows -1,4,QTableWidgetItem(party_time))
-        #     self.mymakeparty_table.setCellWidget(numrows -1,5,self.my_party_check_btn)
-
 
 
 ###########################################################################################################################################################################
@@ -279,6 +236,9 @@ class main_class(QDialog,QWidget, main_form_class):
         cell_Position_Value = self.all_partytable.indexAt(cell_Position.pos())
         #위의 좌표값을 바탕으로 파티키 가져오기      
         btn_party_key = self.all_partytable.item(cell_Position_Value.row(),0).text()
+        #지금 보고있는 파티의 파티키 전역변수에 대입
+        global now_view_party_key
+        now_view_party_key = btn_party_key
         #가져온 파티키로 db의 맴버테이블에 접근해서 정보 가져오기
         conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='party', charset='utf8')
         curs = conn.cursor()
@@ -302,6 +262,9 @@ class main_class(QDialog,QWidget, main_form_class):
         cell_Position_Value = self.today_party_table.indexAt(cell_Position.pos())
         #위의 좌표값을 바탕으로 파티키 가져오기      
         btn_party_key = self.today_party_table.item(cell_Position_Value.row(),0).text()
+        #지금 보고있는 파티의 파티키 전역변수에 대입
+        global now_view_party_key
+        now_view_party_key = btn_party_key
         #가져온 파티키로 db의 맴버테이블에 접근해서 정보 가져오기
         conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='party', charset='utf8')
         curs = conn.cursor()
@@ -319,7 +282,7 @@ class main_class(QDialog,QWidget, main_form_class):
 
 
 
-        #내가만든 파티인원 보기
+        #내가만든 파티 인원 보기
     def my_party_check_btn_signal(self):
         self.member_list.clear()
         #클릭한 버튼 정보 가져오기
@@ -328,6 +291,9 @@ class main_class(QDialog,QWidget, main_form_class):
         cell_Position_Value = self.mymakeparty_table.indexAt(cell_Position.pos())
         #위의 좌표값을 바탕으로 파티키 가져오기      
         btn_party_key = self.mymakeparty_table.item(cell_Position_Value.row(),0).text()
+        #지금 보고있는 파티의 파티키 전역변수에 대입
+        global now_view_party_key
+        now_view_party_key = btn_party_key
         #가져온 파티키로 db의 맴버테이블에 접근해서 정보 가져오기
         conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='party', charset='utf8')
         curs = conn.cursor()
@@ -343,7 +309,28 @@ class main_class(QDialog,QWidget, main_form_class):
         main_class.select_cut(party_value,self)
 
     def joinparty_btn(self):
-        pass
+
+        # 선택한 캐릭터 가져오기
+        conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='party', charset='utf8')
+        curs = conn.cursor()
+        cho_char_str=self.charter_select.currentText()
+        cho_char_str2 = cho_char_str.split()
+        print(cho_char_str2)
+
+        #파티 키 값과 유저 아이디를 기준으로 멤버테이블에 데이터가 있는지 없는지 체크
+        joinmember_sql = "select charter_name,charter_level,charter_class,userid from member_table where party_table_party_key = '%s' and userid = '%s' ;"%(now_view_party_key,login_myid)
+        curs.execute(joinmember_sql)
+        joinmember = curs.fetchall()
+        #멤버테이블에서 데이터를 못가져올때 insert
+        if not joinmember:     
+            joinmember_insert_sql = "INSERT INTO `party`.`member_table` (`party_table_party_key`, `charter_name`, `charter_level`, `charter_class`, `userid`) VALUES ('%s', '%s', '%s', '%s', '%s');"%(now_view_party_key,cho_char_str2[0],cho_char_str2[1],cho_char_str2[2],login_myid)
+            curs.execute(joinmember_insert_sql)
+            conn.commit()
+            QMessageBox.information(self,"ok","완료되심")
+        #멤버테이블에서 데이터를 발견했을때 메시지
+        else:
+            QMessageBox.information(self,"ok","이미 신청되있는거 아님 ??")
+
 
 
 
