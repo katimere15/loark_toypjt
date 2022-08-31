@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>896</width>
-    <height>636</height>
+    <height>634</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="all_party">
     <attribute name="title">
@@ -38,6 +38,24 @@
        <height>531</height>
       </rect>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="dragDropOverwriteMode">
+      <bool>false</bool>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="verticalHeaderCascadingSectionResizes">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>80</number>
+     </attribute>
+     <attribute name="verticalHeaderHighlightSections">
+      <bool>true</bool>
+     </attribute>
     </widget>
     <widget class="QPushButton" name="partymake_butten">
      <property name="geometry">
@@ -55,9 +73,9 @@
    </widget>
    <widget class="QWidget" name="todaystart_party">
     <attribute name="title">
-     <string>오늘 출발하는 파티</string>
+     <string>출발 하루남은 파티</string>
     </attribute>
-    <widget class="QTableWidget" name="tableWidget_2">
+    <widget class="QTableWidget" name="today_party_table">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -66,6 +84,18 @@
        <height>531</height>
       </rect>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="verticalHeaderCascadingSectionResizes">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>80</number>
+     </attribute>
     </widget>
     <widget class="QPushButton" name="todaystart_party_table">
      <property name="geometry">
@@ -94,11 +124,23 @@
        <height>531</height>
       </rect>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="verticalHeaderCascadingSectionResizes">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>80</number>
+     </attribute>
     </widget>
     <widget class="QPushButton" name="partymake_butten_3">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>160</x>
        <y>550</y>
        <width>75</width>
        <height>23</height>
@@ -106,6 +148,19 @@
      </property>
      <property name="text">
       <string>파티만들기</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>550</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>파티취소</string>
      </property>
     </widget>
    </widget>
@@ -122,11 +177,23 @@
        <height>531</height>
       </rect>
      </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
+     <attribute name="verticalHeaderCascadingSectionResizes">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderDefaultSectionSize">
+      <number>80</number>
+     </attribute>
     </widget>
     <widget class="QPushButton" name="partymake_butten_4">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>160</x>
        <y>550</y>
        <width>75</width>
        <height>23</height>
@@ -134,6 +201,19 @@
      </property>
      <property name="text">
       <string>파티만들기</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>550</y>
+       <width>75</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>신청취소</string>
      </property>
     </widget>
    </widget>
@@ -153,7 +233,7 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>150</x>
+      <x>250</x>
       <y>560</y>
       <width>75</width>
       <height>23</height>
@@ -174,9 +254,19 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QListWidget" name="listWidget"/>
+      <widget class="QListWidget" name="member_list"/>
      </item>
     </layout>
+   </widget>
+   <widget class="QComboBox" name="charter_select">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>560</y>
+      <width>211</width>
+      <height>22</height>
+     </rect>
+    </property>
    </widget>
   </widget>
  </widget>
@@ -189,17 +279,34 @@
    <slot>partymake_btn()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>312</x>
-     <y>261</y>
+     <x>244</x>
+     <y>597</y>
     </hint>
     <hint type="destinationlabel">
-     <x>481</x>
-     <y>419</y>
+     <x>516</x>
+     <y>567</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>joinparty_btn()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>710</x>
+     <y>605</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>515</x>
+     <y>593</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
   <slot>partymake_btn()</slot>
+  <slot>joinparty_btn()</slot>
  </slots>
 </ui>

@@ -22,12 +22,12 @@ class class_name(QDialog,QWidget, form_class):
     def initui(self):
         self.setupUi(self)
         #행만 추가
-        self.tableWidget.setColumnCount(4)
+        self.tableWidget.setColumnCount(5)
         #테이블 수평정렬
         self.tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         
         #행 header이름 변경
-        table_column=["파티이름" , "종류,시간" , "공대장" , "인원 수"]
+        table_column=["파티이름" , "종류,시간" , "공대장" , "인원 수","파티 인원 보기"]
         self.tableWidget.setHorizontalHeaderLabels(table_column)
 
     #버튼누르면 테이블에 정보 추가

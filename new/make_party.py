@@ -398,24 +398,37 @@ class make_party_class(QDialog,QWidget,make_party_form_class):
                 self.partyname_data = "%s 님의 즐거운 %s 파티"%(main.usertopcharter,self.view_raid.text())
 
             party_datatime = self.view_date.text() +" "+ self.view_time.text()
-            party_raid_info = self.raid_info
+            party_raid_info = self.view_raid.text()
             
             party_makechart = self.view_char.text().split()
             
 
-
-            conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='lostark', charset='utf8')
+            #db연결
+            conn = pymysql.connect(host='localhost', user='root', password='katimere1@', db='party', charset='utf8')
+            # 파티테이블에 추가
             makeparty_sql = "INSERT INTO `party`.`party_table` (`makeuserid`, `makecharname`, `party_name`, `party_value`, `party_datatime`) VALUES ('%s', '%s', '%s', '%s', '%s');"%(main.login_myid, party_makechart[0], self.partyname_data, party_raid_info, party_datatime)
-
             curs = conn.cursor()
             curs.execute(makeparty_sql)
             conn.commit()
-            QMessageBox.information(self,"확인","파티가 만들어졌으셈")
 
+            #멤버 테이블에 추가
+            party_makechart_sql = "select max(party_key),charter_name,charter_level,charter_class from party_table,charter_table where charter_name = '%s';"%party_makechart[0]
+            # 만들어진 파티정보 테이블과 보유 캐릭터 테이블을 조인해서 내가 입력한 캐릭터 정보를 가져옴
+            curs = conn.cursor()
+            curs.execute(party_makechart_sql)
+            member_charter = curs.fetchall()
+            
+            #테이블 추가 sql 커밋
+            member_table_sql = "INSERT INTO `party`.`member_table` (`party_table_party_key`, `charter_name`, `charter_level`, `charter_class`,`userid`) VALUES ('%s', '%s', '%s', '%s', '%s');"%(member_charter[0][0],member_charter[0][1],member_charter[0][2],member_charter[0][3],main.login_myid)
+            
+            curs.execute(member_table_sql)
+            conn.commit()
 
-
+            QMessageBox.information(self,"확인","파티 만들어졌셈")
 
             self.close()
+            self.main_page = main.main_class()
+            self.main_page.show()
 
 
 
